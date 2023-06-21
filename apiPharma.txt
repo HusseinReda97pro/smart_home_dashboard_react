@@ -1,0 +1,32 @@
+User History
+
+Get /api/v1/admin/history/user
+query: userId
+
+
+
+Types
+
+Post /api/v1/admin/types
+body:{ name}
+response:{ name,_id}
+
+Put /api/v1/admin/types
+body: {name}
+response:{ name,_id}
+
+
+Delete /api/v1/admin/types
+body: {id}
+response: { message: "Type Deleted Successfuly." }
+
+
+Get /api/v1/admin/types
+response:[{ name,_id}]
+
+
+Useage:
+1-when adding faculty get the types and the user 
+ can select multiple types then send it as [{type.name}] -> List of String
+2-when adding a course to this faculty get the types for this faculty 
+and let the user select one of them.
