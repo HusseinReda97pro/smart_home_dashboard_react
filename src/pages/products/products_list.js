@@ -13,7 +13,7 @@ const ProductsList = ({ key, localSearch, searchTerm }) => {
 	const [productListError, setProductListError] = useState();
 	const [productListLoading, setProductListLoading] = useState(false);
 
-	const fetchUsers = async () => {
+	const fetchProducts = async () => {
 		try {
 			const usersCollection = await firebase.firestore().collection('products').get();
 			const productsData = usersCollection.docs.map((doc) => ({
@@ -33,7 +33,7 @@ const ProductsList = ({ key, localSearch, searchTerm }) => {
 	useEffect(async () => {
 		setProductListError(null);
 		setProductListLoading(true);
-		await fetchUsers();
+		await fetchProducts();
 
 		setProductListLoading(false);
 	}, []);
@@ -66,7 +66,7 @@ const ProductsList = ({ key, localSearch, searchTerm }) => {
 										</Col>
 										<Col style={{ width: "30%" }}>
 
-											<Link to={`/products/${product._id}/items`}>
+											<Link to={`/products/${product.id}/items`}>
 												<Button type='primary' style={{ backgroundColor: "#413960" }}>Items</Button>
 											</Link>
 										</Col>

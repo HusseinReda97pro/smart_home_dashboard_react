@@ -16,6 +16,7 @@ import CourseStudents from "./pages/courses/CourseStudents";
 import CreateType from "./pages/type/CreateType";
 import EnrollRequest from "./pages/enrollRequests/EnrollRequest";
 import CreateProduct from "./pages/products/create_product";
+import ItemList from "./pages/items/item_list";
 require('dotenv').config()
 // const admin = require('firebase-admin');
 // import { initializeApp } from 'firebase/app';
@@ -35,13 +36,13 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/products" state={{ archived: false }} component={CreateProduct} />
-        {/* <Route exact path="/archivedcourses" state={{ archived: true }} component={CreateCourse} />
-        <Route exact path="/products/:courseId" component={SingleCourse} />
+        =<Route exact path="/products/:productId" component={SingleCourse} />
         <Route
           exact
-          path="/products/:courseId/students"
-          component={CourseStudents}
+          path="/products/:productId/items"
+          component={ItemList}
         />
+        {/*
         <Route exact path="/requests" component={EnrollRequest} />
         <Route exact path="/universities" component={CreateUniversity} />
         <Route exact path="/faculties" component={CreateFaculty} />

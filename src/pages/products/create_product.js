@@ -68,8 +68,6 @@ const AddProductForm = () => {
         setSelectedImage(null);
         setProductsListKey(productsListKey + 1);
         setIsModalVisible(false);
-
-
     }
 
     useEffect(() => {
