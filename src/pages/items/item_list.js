@@ -21,8 +21,11 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
             if (productData.exists) {
                 setProduct(productData.data());
             }
+
+
             const db = firebase.database();
-            const ref = db.ref('smart_home/items');
+            let ref = db.ref('smart_home/items');
+            ref = ref.orderByChild('productId').equalTo(`${productId}`);
 
             // Attach a listener to the 'value' event for real-time updates
             ref.on('value', (snapshot) => {
@@ -30,7 +33,8 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
                 if (data) {
                     // Convert the data object to an array
                     const dataArray = Object.entries(data).map(([id, item]) => ({
-                        id: id.replace(/-/g, ''),
+                        // id: id.replace(/-/g, ''),
+                        id: id,
                         ...item
                     }));
                     console.log("dataArray");
@@ -80,7 +84,7 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
     const updateAssigned = (item) => {
         try {
             const db = firebase.database();
-            const docRef = db.ref(`smart_home/items/-${item.id}`);
+            const docRef = db.ref(`smart_home/items/${item.id}`);
             docRef
                 .update({
                     isAssigned: !item.isAssigned
@@ -90,7 +94,13 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
                     // item.isAssigned = !item.isAssigned;
 
                     // setItemList([...itemList]);
-                    toast("Assigned to device", 1);
+                    if (!item.isAssigned) {
+                        toast("Assigned to device", 1);
+
+                    } else {
+                        toast("Unassigned to device", 1);
+
+                    }
                 })
                 .catch((error) => {
                     console.error('Error updating document:', error);

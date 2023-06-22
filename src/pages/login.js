@@ -48,7 +48,7 @@ const Login = () => {
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
             if (!!user) {
-                history.push('/courses');
+                history.push('/products');
             }
         });
 
@@ -63,7 +63,7 @@ const Login = () => {
             .then((userCredential) => {
                 // Login successful
                 const user = userCredential.user;
-                history.push('/courses');
+                history.push('/products');
                 console.log('Logged in user:', user);
             })
             .catch((error) => {
@@ -110,7 +110,7 @@ const Login = () => {
                         <Input.Password size='large' prefix={<LockOutlined />} placeholder='Password' />
                     </Form.Item>
                     <Space>
-                        <Button type='primary' htmlType='submit' loading={user?.loading}>
+                        <Button style={{ backgroundColor: '#413960' }} type='primary' htmlType='submit' loading={user?.loading}>
                             Login
                         </Button>
                         <Button htmlType='button' onClick={onReset}>
