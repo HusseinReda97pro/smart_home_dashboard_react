@@ -19,7 +19,7 @@ const AddProductForm = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
-    const [actions, setActions] = useState(["switch_state_1"]);
+    const [actions, setActions] = useState({ "switch_state_1": 0 });
     const [productsListKey, setProductsListKey] = useState(0); // Initialize the key state
 
 
@@ -37,19 +37,19 @@ const AddProductForm = () => {
 
 
     const addSwitchAction = () => {
-        console.log('addSwitchAction');
-        actions.push(`switch_state_${actions.length + 1}`);
-        console.log(actions);
-        console.log(actions);
-        setActions([...actions]);
+        let size = Object.keys(actions).length + 1;
+        actions[`switch_state_${size}`] = 0;
+        setActions({ ...actions });
 
     }
 
     const removeSwitchAction = () => {
-        console.log('removeSwitchAction');
-        if (actions.length == 1) return;
-        actions.pop();
-        setActions([...actions]);
+        let length = Object.keys(actions).length;
+        if (length == 1) return;
+        const keysArray = Object.keys(actions);
+        const lastKey = keysArray[keysArray.length - 1];
+        delete actions[lastKey];
+        setActions({ ...actions });
     }
 
     const handleSubmit = async e => {
@@ -190,11 +190,20 @@ const AddProductForm = () => {
                             <center> Actions</center>
                             <hr />
                             <ul>
-                                {actions.map((action, index) => (
-                                    <li key={index}>
-                                        {action}
-                                    </li>
-                                ))}
+                                {
+
+                                    Object.entries(actions).map(([action, status]) => (
+                                        <li key={action}>
+                                            {action}
+                                        </li>
+                                    ))
+                                    // actions
+                                    // .map((action, status) => (
+                                    //     <li key={action}>
+                                    //         {action}
+                                    //     </li>
+                                    // ))
+                                }
                             </ul>
                             <div style={{ float: "right", margin: "15px" }}>
 
