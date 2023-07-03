@@ -56,7 +56,7 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
     const addItems = () => {
         if (itemsCountToAdd < 1) return;
 
-        let item = { productId: productId, isAssigned: false, users: [] };
+        let item = { productId: productId, isAssigned: false, users: [], actions: product.actions };
         // const itemsToAdd = Array(5).fill(item);
         const itemsToAdd = Array.from({ length: itemsCountToAdd }, () => item);
 
