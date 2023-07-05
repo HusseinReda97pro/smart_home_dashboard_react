@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import firebase from 'firebase/compat';
 import { toast } from 'react-toastify';
 import Barcode from 'react-barcode';
+import QRCode from 'react-qr-code';
 
 const ItemList = ({ key, localSearch, searchTerm }) => {
     const [itemList, setItemList] = useState([]);
@@ -154,7 +155,7 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
                             <tr>
                                 <th style={{ width: "20px" }}>Assigned to device</th>
                                 <th><center>Item ID</center></th>
-                                <th><center>Item Barcode</center></th>
+                                <th><center>Item QRCode</center></th>
                                 <th><center>users number</center></th>
 
                             </tr>
@@ -164,7 +165,11 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
                                 <tr key={item.id} style={{ paddingTop: "2rem", backgroundColor: item.isAssigned ? "#A2CDB0" : index % 2 == 0 ? "#fff" : "#eee" }}>
                                     <td style={{ width: "20px" }}>{<center><input type="checkbox" checked={item.isAssigned} onChange={() => updateAssigned(item)} /></center>}</td>
                                     <td><center>{item.id}</center> </td>
-                                    <td><center><Barcode value={item.id} height={30} width={1} />, </center></td>
+                                    <td><center><QRCode value={item.id}
+                                        style={{ height: "250px", maxWidth: "100%", width: "100%", paddingTop: "2rem", paddingBottom: "2rem" }} /> </center></td>
+                                    {/* <td><center><Barcode value={item.id} height={30} width={1} />, </center></td> */}
+
+
                                     <td><center>{item.users?.length ?? 0} </center></td>
                                 </tr>
                             ))}
@@ -173,6 +178,7 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
 
                 }
             </Row >
+            <div style={{ height: "2rem" }} />
         </>
     );
 
