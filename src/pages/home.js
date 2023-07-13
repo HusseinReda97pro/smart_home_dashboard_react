@@ -32,7 +32,7 @@ const Home = () => {
 
             <div style={{ alignItems: 'baseline;', display: 'flex' }}>
                 <img src="/smart_logo.png" alt="logo" width="300" />
-                <h6 style={{ marginLeft: '10px;' }}>Smart Home</h6>
+                <h6 style={{ marginLeft: '10px;' }}>APP Ads</h6>
             </div>
 
             {/* <button onClick={test}>

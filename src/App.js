@@ -17,6 +17,7 @@ import CreateType from "./pages/type/CreateType";
 import EnrollRequest from "./pages/enrollRequests/EnrollRequest";
 import CreateProduct from "./pages/products/create_product";
 import ItemList from "./pages/items/item_list";
+import AppAds from "./pages/app_ads/app_ads_page";
 require('dotenv').config()
 // const admin = require('firebase-admin');
 // import { initializeApp } from 'firebase/app';
@@ -35,8 +36,10 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/products" state={{ archived: false }} component={CreateProduct} />
+        <Route exact path="/products" component={CreateProduct} />
         =<Route exact path="/products/:productId" component={SingleCourse} />
+        <Route exact path="/app_ads" component={AppAds} />
+
         <Route
           exact
           path="/products/:productId/items"

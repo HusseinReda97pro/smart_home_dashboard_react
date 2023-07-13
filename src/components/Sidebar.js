@@ -31,8 +31,12 @@ const Sidebar = () => {
     >
       <Menu theme="light" mode="inline">
         <Menu.Item key="1" icon={<ShoppingTwoTone />}>
-          <Link to={{ pathname: "/products", state: { archived: false } }} >Products</Link>
+          <Link to={{ pathname: "/products" }} >Products</Link>
         </Menu.Item>
+        <Menu.Item key="2" icon={<ShoppingTwoTone />}>
+          <Link to={{ pathname: "/app_ads" }} >App Ads</Link>
+        </Menu.Item>
+
         {/* <Menu.Item key="2" icon={<UserOutlined />}>
           <Link to={{ pathname: "/archivedcourses", state: { archived: true } }} >Archived Courses</Link>
         </Menu.Item>
