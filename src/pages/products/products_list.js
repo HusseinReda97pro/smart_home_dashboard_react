@@ -56,8 +56,8 @@ const ProductsList = ({ key, localSearch, searchTerm }) => {
 								actions={[
 									<Row>
 										<Col style={{ width: "30%", }}>
-											<Link to={`/products/${product.id}`}>
-												<Button type='primary' style={{ backgroundColor: "#413960" }}>View</Button>
+											<Link to={`/products/${product.id}/firmware`}>
+												<Button type='primary' style={{ backgroundColor: "#413960" }}>Firmware</Button>
 											</Link>
 										</Col>
 										<Col style={{ width: "40%" }}>

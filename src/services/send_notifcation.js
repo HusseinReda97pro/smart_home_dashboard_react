@@ -1,12 +1,15 @@
 import { toast } from 'react-toastify';
 
-const sendFCMNotification = async (title, body) => {
+const sendFCMNotification = async (title, body, topic = "allDevices") => {
     console.log("sendFCMNotification");
     const url = 'https://fcm.googleapis.com/fcm/send';
     const serverKey = 'AAAAhkVYSOk:APA91bEDmuFY8z9z_BVEVbFQUfCsZ1Gxoyk46V3-iP7f-f7ZDomUxvso2KEhoNAe8w90Mg_IyCmEdnMJ58TRpBAy8NLvLqNHki3iBZqMAC_a_KQgv4vzLXb5OtaK-vtsvBZ2gGPdHmj3';
 
+    console.log("topic");
+    console.log(`/topics/${topic}`);
     const notification = {
-        to: '/topics/allDevices',
+        to: `/topics/${topic}`,
+        // to: `/topics/allDevices`,
         notification: {
             title: title,
             body: body,

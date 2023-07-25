@@ -18,6 +18,7 @@ import EnrollRequest from "./pages/enrollRequests/EnrollRequest";
 import CreateProduct from "./pages/products/create_product";
 import ItemList from "./pages/items/item_list";
 import AppAds from "./pages/app_ads/app_ads_page";
+import FirmwareList from "./pages/products/firmware_list";
 require('dotenv').config()
 // const admin = require('firebase-admin');
 // import { initializeApp } from 'firebase/app';
@@ -44,6 +45,12 @@ const App = () => {
           exact
           path="/products/:productId/items"
           component={ItemList}
+        />
+
+        <Route
+          exact
+          path="/products/:productId/firmware"
+          component={FirmwareList}
         />
         {/*
         <Route exact path="/requests" component={EnrollRequest} />

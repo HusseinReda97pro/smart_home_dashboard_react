@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 
 import firebase from 'firebase/compat';
 import { toast } from 'react-toastify';
-import Barcode from 'react-barcode';
 import QRCode from 'react-qr-code';
 
 const ItemList = ({ key, localSearch, searchTerm }) => {
