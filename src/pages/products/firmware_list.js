@@ -93,8 +93,17 @@ const FirmwareList = ({ key, localSearch, searchTerm }) => {
                 },
                 async () => {
 
-                    let last_version = (product.last_version ?? 0) + 1
+                    // let last_version = (product.last_version ?? 0) + 1;
                     let all_updates = product.updates ?? [];
+                    let last_version;
+                    if (all_updates.length > 0) {
+                        last_version = all_updates[all_updates.length - 1].version + 1;
+                    } else {
+                        last_version = 1;
+                    }
+
+
+
                     all_updates.push({
                         version: last_version,
                         url: `products_firmwares/${productId}/${file_name}`
@@ -109,8 +118,19 @@ const FirmwareList = ({ key, localSearch, searchTerm }) => {
                     const docRef = firebase.firestore().collection('products').doc(productId);
                     // Perform the update operation
                     await docRef.update(data).then((_) => {
-                        toast('update added successfully');
-                        fetchProductUpdates();
+
+                        const db = firebase.database();
+                        let ref = db.ref(`smart_home/products/${productId}`);
+                        ref.set({
+                            last_version: last_version,
+                            last_version_url: `products_firmwares/${productId}/${file_name}`,
+
+                        }).then((_) => {
+                            toast('update added successfully');
+                            fetchProductUpdates();
+                        });
+
+
                     })
                         .catch((error) => {
                             console.log(error);
@@ -134,8 +154,17 @@ const FirmwareList = ({ key, localSearch, searchTerm }) => {
         };
 
         await docRef.update(data).then((_) => {
-            toast('Rollback successfully');
-            fetchProductUpdates();
+
+            const db = firebase.database();
+            let ref = db.ref(`smart_home/products/${productId}`);
+            ref.set(data).then((_) => {
+
+                toast('Rollback successfully');
+                fetchProductUpdates();
+            });
+
+
+
         })
             .catch((error) => {
                 console.log(error);
@@ -186,7 +215,7 @@ const FirmwareList = ({ key, localSearch, searchTerm }) => {
                         </thead>
                         <tbody>
                             {updatesList.map((update, index) => (
-                                <tr key={"update.id"} style={{ paddingTop: "2rem", backgroundColor: index % 2 == 0 ? "#fff" : "#eee" }}>
+                                <tr key={update.version} style={{ paddingTop: "2rem", backgroundColor: index % 2 == 0 ? "#fff" : "#eee" }}>
                                     <td style={{ width: "60px" }}>{<center>{update.version}</center>}</td>
                                     <td><center><a target='blank' href={base_storage_url + (update.url.replaceAll("/", "%2F") + token)}>File</a></center> </td>
                                     <td>
