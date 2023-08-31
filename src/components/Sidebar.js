@@ -37,6 +37,10 @@ const Sidebar = () => {
           <Link to={{ pathname: "/app_ads" }} >App Ads</Link>
         </Menu.Item>
 
+        <Menu.Item key="3" icon={<ShoppingTwoTone />}>
+          <Link to={{ pathname: "/complaints" }} >Complaints</Link>
+        </Menu.Item>
+
         {/* <Menu.Item key="2" icon={<UserOutlined />}>
           <Link to={{ pathname: "/archivedcourses", state: { archived: true } }} >Archived Courses</Link>
         </Menu.Item>
