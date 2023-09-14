@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Row, Spin, Alert, Table, } from 'antd';
 import { Button } from 'antd';
 import { useParams } from 'react-router-dom';
@@ -6,6 +6,9 @@ import { useParams } from 'react-router-dom';
 import firebase from 'firebase/compat';
 import { toast } from 'react-toastify';
 import QRCode from 'react-qr-code';
+import ItemLabel from './item_label';
+import jsPDF from 'jspdf';
+import { useReactToPrint } from 'react-to-print';
 
 const ItemList = ({ key, localSearch, searchTerm }) => {
     const [itemList, setItemList] = useState([]);
@@ -14,6 +17,9 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
     const { productId } = useParams();
     const [product, setProduct] = useState(false);
     const [itemsCountToAdd, setItemsCountToAdd] = useState(1);
+    const ref = useRef();
+    const [LabelsToPrint, set] = useState([]);
+
 
     const fetchProductItems = async () => {
         try {
@@ -115,6 +121,24 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
 
     }
 
+    const printPDF =
+        // const doc = new jsPDF({
+        //     orientation: "landscape",
+        //     unit: "in",
+        //     format: [4, 2]
+        // });
+
+        // doc.addJS();
+        // doc.save("products_label_" + Date.now() + ".pdf");
+
+        useReactToPrint({
+            content: function () {
+                ref.current.removeAttribute('hidden');
+                return ref.current;
+            }
+        });
+
+
     useEffect(async () => {
         setItemListError(null);
         setItemListLoading(true);
@@ -127,7 +151,7 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
     const items = () => (
         <>
 
-            <div style={{ marginTop: "6rem" }}>
+            <div style={{ marginTop: "6rem" }} >
                 <center>  <img src={product.image}></img></center>
                 <center>  <h1 style={{ marginTop: "2rem" }}>{product.name}</h1></center>
             </div>
@@ -142,6 +166,14 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
                     <Button type='primary' style={{ backgroundColor: "#413960", width: "110px", marginLeft: "0.5rem" }} onClick={addItems}>Add Items</Button>
 
                 </div>
+                <div style={{ display: "flex", justifyContent: "flex-end", float: "right", width: "90vw", height: "40px", margin: "auto" }}>
+                    <Button type='primary' style={{ backgroundColor: "#413960", width: "140px", marginTop: "0.5rem", marginRight: "0.5rem", }} onClick={() => {
+                        printPDF();
+                        ref.current.setAttribute('hidden', '');
+
+                    }}>Print Item Labels</Button>
+                </div>
+
             </Row>
             <Row gutter={[10, 10]} style={{ marginLeft: "6rem", marginRight: "6rem", marginTop: "0.5rem", marginBottom: "4rem" }}>
 
@@ -154,23 +186,33 @@ const ItemList = ({ key, localSearch, searchTerm }) => {
                             <tr>
                                 <th style={{ width: "20px" }}>Assigned to device</th>
                                 <th><center>Item ID</center></th>
-                                <th><center>Item QRCode</center></th>
+                                <th><center>Item Label</center></th>
                                 <th><center>users number</center></th>
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {itemList.map((item, index) => (
                                 <tr key={item.id} style={{ paddingTop: "2rem", backgroundColor: item.isAssigned ? "#A2CDB0" : index % 2 == 0 ? "#fff" : "#eee" }}>
                                     <td style={{ width: "20px" }}>{<center><input type="checkbox" checked={item.isAssigned} onChange={() => updateAssigned(item)} /></center>}</td>
                                     <td><center>{item.id}</center> </td>
-                                    <td><center><QRCode value={item.id}
-                                        style={{ height: "250px", maxWidth: "100%", width: "100%", paddingTop: "2rem", paddingBottom: "2rem" }} /> </center></td>
+                                    <td ><ItemLabel item={item} productName={product.name} /></td>
                                     {/* <td><center><Barcode value={item.id} height={30} width={1} />, </center></td> */}
 
 
                                     <td><center>{item.users?.length ?? 0} </center></td>
                                 </tr>
+                            ))}
+                        </tbody>
+
+                        <tbody ref={ref} hidden>
+                            {itemList.map((item, index) => (
+                                < div style={{ paddingBottom: "1cm", }}>
+                                    <tr key={item.id} style={{ margin: "2cm", backgroundColor: "#fff" }}>
+                                        <td  > <ItemLabel item={item} productName={product.name} /> </td>
+
+                                    </tr>
+                                </div>
                             ))}
                         </tbody>
                     </table>
