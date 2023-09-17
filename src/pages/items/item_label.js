@@ -10,22 +10,20 @@ const ItemLabel = ({ item, productName }) => {
 
                 <Col style={{ textAlign: "left", }} >
                     <div>{productName} </div>
-                    <div>Model: {"TLL331041"} </div>
-                    <div>Power:{"100-240V AC"} </div>
-                    <div>Power Frequency: {"50/60Hz"} </div>
+                    <div>Power:{"100-240V AC - 50/60Hz"} </div>
                     <div>Load: {"1000W/gang Max"} </div>
                     <Row>
                         <div style={{ paddingRight: "1cm", height: "2cm", width: "2cm" }}>
 
                             <QRCode value={item.id}
-                                style={{ height: "1cm", width: "1cm", }} />
+                                style={{ height: "1.5cm", width: "1.5cm", }} />
                         </div>
 
-                        <Col style={{ textAlign: "left", }} >
+                        <Col style={{ textAlign: "left", paddingTop: "0.2cm" }} >
                             <div>Designed in Egypt</div>
                             <div>Made In Egypt</div>
-                            <img style={{ width: "0.5cm", height: "0.5cm" }} src='/ce.png' />
-                            <img style={{ width: "0.5cm", height: "0.5cm" }} src='/trash.png' />
+                            {/* <img style={{ width: "0.5cm", height: "0.5cm" }} src='/ce.png' /> */}
+                            <img style={{ width: "0.5cm", height: "0.5cm", float: "right", marginTop: "0.1cm" }} src='/trash.png' />
                         </Col>
                     </Row>
 
